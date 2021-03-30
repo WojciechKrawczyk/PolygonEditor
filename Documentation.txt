@@ -1,0 +1,79 @@
+DOKUMENTACJA PROJEKTU
+
+INTRUKCJA OBSŁUGI - "KLAWISZOLOGIA"
+
+Prawie wzystkie funkcjonalności są dostępne z pomocą myszki.
+
+1. Rysowanie wielokątów
+Aby rozpocząć rysowanie wielokąta należy kliknąc lewym przyciskiem myszy na wolnym obszarze.
+Miejsce kliknięcia będzie stanowić początkowy wierzchołek wielokąta.
+Nastepne kliknięcia za pomocą lewego przycisku myszy wyznaczą jego kolejne wierzchołki.
+Aby zakończyć rysowanie wielokąta należy połączyć krawędźią ostatni i poczatkowy wierzchołek.
+
+Uwaga: Aby przerwać rysowanie wielokąto w dowolnym momencie, nalezy klinkąć klawisz 'c'.
+       Spowoduje to usunięcie dotychczasowego obramowania danego wielokąta.
+
+Instrukcje można również sprawdzić w aplikacji w zakładce "Help" w lewym górnym roku.
+
+2. Edycja elementów
+Do edycji dostepne są 3 elementy: wielokąty, krawędźie oraz wierzchołki.
+
+Wszystkie te elementy można przesuwać, należy kliknąć na element lewym przyciskiem myszy
+i trzymając go przesuwać kursor po tablicy.
+
+Dodatkowe opcje: usuwanie (w przypadku wielokąta i wierzchołków) oraz nadawanie relacji (w przypadku krawędźi) 
+są dostepne za pomoca prawgo klawisza myszy. Należy najechać myszką na dany element i kliknąć prawy przycisk.
+Powoduje to pojawienie się kontekstowego menu, z którego można wybrać dane operacje.
+Wszystkie operacja są oznaczone intuicjonalnymi ikonkami. 
+
+Uwaga: Podczas próby usuwania wierzchołka z trójkąta usuwa się cały wielokąt, ponieważ dopuszczone są tylko wielokąty, 
+       pojedyńczych odcinków nie da się rysować.
+
+PRZYJĘTE ZAŁOŻENIA I OPIS ALGORYTMU "RELACJI"
+
+Założenia:
+1. Wszystkie krawędźie są rysowanie z wykorzystaniem własnej implementacji algorytmu Bresenhama.
+2. Dodanie wierzchołka na środku danej krawędzi powoduje usunięcie na niej ograniczenia 
+   i powstanie dwóch nowych krawędzi bez nadanych ograniczeń.
+3. Podczas dodawania ograniczeń dla krawędzi, żadne dwie sąsiadujące krawędzie nie mogą być obie pionowe lub poziome.
+4. Podczas usuwania wierzchołka usuwane są dwie styczne z nim krawędzie. 
+   Powstaje nowa krawędź bez ograniczeń zamykająca wielokąt.
+5. Każda krawędź w danym momencie może mieć tylko jedno ograniczenie (istnieje możliwość usuwania ograniczeń).
+6. Ograniczenie krawędzi w poziomie polega na zachowaniu tej samej wartości Y dla obu jej wierzchołkow podczas edycji.
+   Długość krawędzi może się zmieniać.
+7. Ograniczenie krawędzi w pionie polega na zachowaniu tej samej wartości X dla obu jej wierzchołkow podczas edycji.
+   Długość krawędzi może się zmieniać.
+8. Ograniczenie długości krawędzi wiąże się z tym, że od momentu nadania ograniczenia krawędź będzie zachowywała swoją długość.
+
+Opis algorytmów:
+1. Nadania krawędzi ograniczenia w pionie lub poziomie.
+   Jeden  punktów krawędzi, na którą nakładamy ograniczenie zostaje dopasowany do drugiego punktu krawędzi, aby sworzyć krawędź
+   pionową lub odpowiednio poziomą.
+   Następnie algorytm "idzie" w dwie strony od edytowanej krawędzi i poprawia ustawienie kolejnych krawędzi oraz ich punktów.
+   Poprawianie kończy się: - jeżeli napotkana zostaje krawędź bez ograniczeń, którą można dowolnie zmodyfikowac
+		           - napotkana zostanie sekwnacja występujacych bezpośrednio po sobie krawedzi pionowej i poziomej 
+			     (lub poziomej i pionowej), gdyż ich edycja pozwola zachować pgraniczenia i odpowiednio dopasować
+			     cały wielokąt do nowego wiezchołka
+   Napotkane krawędzie z ograniczeniem na długość są przesuwanie o wektor
+
+2. Zachowanie relacji o ograniczeń podczas poruszania wierzchołkiem lub krawedzią
+Schemat algorytmu:
+	Pobierz współrzędne nowego punktu (punktów w przypadku poruszania krawędzią)
+	wektor = przsunięcie nowego punktu wzgledem starego
+	Idź do przodu po krawędziach aż napotkasz krawędź bez ograniczeń lub sekwnecje pionową i poziomą (opisana powyżej)
+		Jeśli krawędź ma ograniczenie na długość przesuń ją o wektor.
+		Jeśli krawędź jest pozioma ukatualnij jej współrzędną Y w drugim punkcie. wektor = przeunięcie punktu drugiego na krawędzi
+		Jeśli krawędź jest pozioma uaktualnij jej wspołrzędną X w drgim punkcie. wektor = przeunięcie punktu drugiego na krawędzi
+	Idź do tyłu po krawędziach aż napotkasz krawędź bez ograniczeń lub sekwnecje pionową i poziomą (opisana powyżej)
+		te same czynności co powyżej
+
+OBECNE BŁĘDY
+Program posiada zaimplementowane wszystkie funkcjonalności podane w wymaganiach.
+Jednak w pewnych sytuacjach edycji wielokąta z ograniczeniami występują błędy.
+Nie zawsze przesunięcie wierzchołka lub krawędźi zachowuje wszystkie ograniczenia.
+W algorytmie jest zapewne jakaś luka na przypadki przegowe, której niestety nie udało sie zidentyfikować.
+W niektórych przypadkach podczas edycji dwa punkty przyjmuja tożsame współrzędne, co powduje, że wielkąt wygląda nienaturalnie,
+lecz wewnątrz zachowuje on prawidłowąą strukturę. 
+W głownej mierze program działa jednak poprawnie.
+
+Autor projektu: Wojciech Krawczyk
